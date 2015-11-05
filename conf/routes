@@ -8,7 +8,7 @@ GET     /uploads/*file                          controllers.Application.getUploa
 # Map static resources from the /app/public folder to the /public path
 GET     /assets/*file                           controllers.Assets.at(path="/public", file)
 
-POST    /upload                                 controllers.Application.upload(qqfile: String, greyThreshold: Double, highpassFilter: Int, turd: Int)
-POST    /reprocess                                controllers.Application.reprocess(filename: String, greyThreshold: Double, highpassFilter: Int, turd: Int)
+POST    /upload                                 controllers.Application.upload(qqfile: String, greyThreshold: Double, highpassFilter: Int, turd: Double)
+POST    /reprocess                                controllers.Application.reprocess(filename: String, greyThreshold: Double, highpassFilter: Int, turd: Double)
 # Catch all
 #*       /{controller}/{action}                  {controller}.{action}

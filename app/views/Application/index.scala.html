@@ -35,11 +35,8 @@ turd:
                 		turd: turd,
               	  });
                 },
-                onComplete: function(id, fileName, responseJSON) {
-                	lastFile=fileName;
-                	
-                	render(responseJSON.data);
-                	$("#result2").attr("src", responseJSON.outputPath)
+                onComplete: function(id, fileName, responseJson) {
+                	handleResult(fileName, responseJson)
                 },
             });
         }
@@ -50,23 +47,31 @@ turd:
     </script>
 </div>
 
-<div id="result"></div>
-<img id="result2" width="1024" height="1024" />
+<div id="result" style="width: 600px; height: 400px;display:inline;"></div>
+<img id="result2" width="600" height="400" />
+<img id="original" width="600" height="400" />
 
 <script>
   var lastFile = ""
+  
+  function handleResult(fileName, responseJson) {
+    lastFile=fileName;
+      
+    render(responseJson.data);
+    $("#result2").attr("src", responseJson.outputPath + "?" + new Date().getTime())
+    $("#original").attr("src", responseJson.original)
+  }
   
   function render(svgData) {
 	  $("#result").html(svgData);
 	  
 	  var svgElem = $("#result").children("svg").first()
-    svgElem.css("width", 1024)
-    svgElem.css("height", 1024)
-    svgElem.attr("data-bob", "1024")
+    svgElem.css("width", 600)
+    svgElem.css("height", 400)
   }
   
-  function reprocessed(responseJSON) {
-	  render(responseJSON.data)
+  function reprocessed(responseJson) {
+	  handleResult(lastFile, responseJson)
   }
   
   function reprocess() {
