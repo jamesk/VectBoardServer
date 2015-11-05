@@ -1,0 +1,86 @@
+@main("Uploader") {
+
+Grey Threshold:
+<input type="number" id="greyThreshold" value="0.48">
+High pass:
+<input type="number" id="highpassFilter" value="10">
+turd:
+<input type="number" id="turd" value="100">
+
+<button type="button" onclick="reprocess()">Reprocess</button>
+<button type="button" onclick="document.body.style.background = 'red'">aLERT ME</button>
+<button type="button" onclick="SvgSharer.showHTML('gfjdjdfjd')">Share2</button> 
+
+
+<div id="file-uploader">
+    <noscript>
+        <p>Please enable JavaScript to use file uploader.</p>
+        <!-- or put a simple form for upload here -->
+    </noscript>
+
+    <script>
+        function createUploader(){
+            var uploader = new qq.FileUploader({
+                element: document.getElementById('file-uploader'),
+                action: '/upload',
+                debug: true,
+                onSubmit: function(id, fileName) {
+                	var greyThreshold = $("#greyThreshold").val()
+                  var highpassFilter = $("#highpassFilter").val()
+                  var turd = $("#turd").val()
+                	
+                	uploader.setParams({
+                		greyThreshold: greyThreshold,
+                	  highpassFilter: highpassFilter,
+                		turd: turd,
+              	  });
+                },
+                onComplete: function(id, fileName, responseJSON) {
+                	lastFile=fileName;
+                	
+                	render(responseJSON.data);
+                	$("#result2").attr("src", responseJSON.outputPath)
+                },
+            });
+        }
+
+        // in your app create uploader as soon as the DOM is ready
+        // don't wait for the window to load
+        window.onload = createUploader;
+    </script>
+</div>
+
+<div id="result"></div>
+<img id="result2" width="1024" height="1024" />
+
+<script>
+  var lastFile = ""
+  
+  function render(svgData) {
+	  $("#result").html(svgData);
+	  
+	  var svgElem = $("#result").children("svg").first()
+    svgElem.css("width", 1024)
+    svgElem.css("height", 1024)
+    svgElem.attr("data-bob", "1024")
+  }
+  
+  function reprocessed(responseJSON) {
+	  render(responseJSON.data)
+  }
+  
+  function reprocess() {
+	  var greyThreshold = $("#greyThreshold").val()
+	  var highpassFilter = $("#highpassFilter").val()
+	  var turd = $("#turd").val()
+	  
+		$.ajax({
+			  type: "POST",
+			  url: '/reprocess?filename=' + lastFile + "&greyThreshold=" + greyThreshold + "&highpassFilter=" + highpassFilter + "&turd=" + turd,
+			  data: null,
+			  success: reprocessed
+		});
+  }
+</script>
+
+}
