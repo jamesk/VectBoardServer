@@ -33,6 +33,7 @@ turd:
                 		greyThreshold: greyThreshold,
                 	  highpassFilter: highpassFilter,
                 		turd: turd,
+                		withData: true
               	  });
                 },
                 onComplete: function(id, fileName, responseJson) {
@@ -81,7 +82,7 @@ turd:
 	  
 		$.ajax({
 			  type: "POST",
-			  url: '/reprocess?filename=' + lastFile + "&greyThreshold=" + greyThreshold + "&highpassFilter=" + highpassFilter + "&turd=" + turd,
+			  url: '/reprocess?filename=' + lastFile + "&greyThreshold=" + greyThreshold + "&highpassFilter=" + highpassFilter + "&turd=" + turd + "&withData=true",
 			  data: null,
 			  success: reprocessed
 		});

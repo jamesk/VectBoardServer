@@ -14,7 +14,9 @@ resolvers ++= Seq(
 
 libraryDependencies ++= Seq(
   "commons-io" % "commons-io" % "2.4",
-  "org.boofcv" % "all" % "0.20-SNAPSHOT"
+  "org.boofcv" % "all" % "0.20-SNAPSHOT",
+  "org.jfree" % "jfreesvg" % "3.0", //Not used
+  "batik" % "batik-svg-dom" % "1.6-1"
 )
 
 scalacOptions ++= Seq(
